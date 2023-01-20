@@ -1,6 +1,9 @@
 #include <iostream>
+#include<fstream>
 #include<string>
 using namespace std;
+
+#define DELIMITR "\n--------------------------------------------------------\n"
 
 #define HUMAN_TAKE_PARAMETERS const std::string& last_name, const std::string& first_name, unsigned int age
 #define HUMAN_GIVE_PARAMETERS last_name, first_name, age
@@ -44,14 +47,14 @@ public:
 		set_age(age);
 		cout << "HConstructor:\t" << this << endl;
 	}
-	~Human()
+	virtual ~Human()
 	{
 		cout << "HDestructor:\t" << this << endl;
 	}
 
 	// Methods:
 
-	void info()const
+	virtual void info()const
 	{
 		cout << last_name << " " << first_name << " " << age << " лет\n";
 	}
@@ -116,7 +119,7 @@ public:
 	
 	// Methods:
 
-	void info()const
+	void info()const override
 	{
 		Human::info();
 		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
@@ -163,7 +166,7 @@ const std::string& get_speciality() const
 
 	// Methods:
 
-	void info()const
+	void info()const override
 	{
 		Human::info();
 		cout << speciality << " " << experience << endl;
@@ -200,18 +203,21 @@ public:
 
 	// Methods:
 
-	void info()const
+	void info()const override
 	{
 		Student::info();
 		cout << subject << endl;
 	}
 };
 
+//#define INHERITANCE
+#define POLYMORPHISM
+
 void main()
 {
 	setlocale(LC_ALL, "Russian");
-	
-	Human human("Montana", "Antonio", 25);
+#ifdef INHERITANCE
+Human human("Montana", "Antonio", 25);
 	human.info();
 
 	Student stud("Pinkman", "Jessie", 25, "Chemistry", "WW_220", 80, 90);
@@ -222,4 +228,32 @@ void main()
 
 	Graduate grad("Schrader", "Hank", 40, "Criminalistic", "OBN", 85, 80, "How to catch Heisenberg");
 	grad.info();
+#endif // INHERITANCE
+
+#ifdef POLYMORPHISM
+	/*Human* p_human1 = new Student("Pinkman", "Jessie", 25, "Chemistry", "WW_220", 80, 90);
+	Human* p_human2 = new Teacher("White", "Walter", 50, "Chemistry", 25);
+	p_human1->info();
+	p_human2->info();*/
+
+	Human* group[] =
+	{
+		new Student("Pinkman", "Jessie", 25, "Chemistry", "WW_220", 80, 90),
+		new Teacher("White", "Walter", 50, "Chemistry", 25),
+		new Graduate("Schrader", "Hank", 40, "Criminalistic", "OBN", 85, 80, "How to catch Heisenberg"),
+		new Student("Vercetti", "Tomas", 30, "Criminalistic", "Vice", 85, 98),
+		new Teacher("Diaz", "Ricardo", 50, "Weapons destribution", 20)
+	};
+	cout << DELIMITR << endl;
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		group[i]->info();
+		cout << DELIMITR << endl;
+	}
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		delete group[i];
+	}
+#endif // POLYMORPHISM
+
 }
