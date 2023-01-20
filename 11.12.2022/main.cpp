@@ -60,6 +60,11 @@ public:
 	}
 };
 
+std::ostream& operator<<(std::ostream&os, const Human& obj)
+{
+	return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age();
+}
+
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
 #define STUDENT_GIVE_PARAMETERS speciality, group, rating, attendance
 
@@ -122,9 +127,15 @@ public:
 	void info()const override
 	{
 		Human::info();
-		cout << speciality << " " << group << " " << rating << " " << attendance << endl;
+		cout << speciality << " " << group << " " << rating << " " << attendance;
 	}
 };
+
+std::ostream& operator<<(std::ostream&os, const Student& obj)
+{
+	os << (Human&)obj << " ";
+	return os << obj.get_speciality() << " " << obj.get_group() << " " << obj.get_rating() << " " << obj.get_attendance();
+}
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, unsigned int experience
 #define TEACHER_GIVE_PARAMETERS speciality, experience
@@ -173,6 +184,12 @@ const std::string& get_speciality() const
 	}
 };
 
+std::ostream& operator<<(std::ostream&os, const Teacher& obj)
+{
+	os << (Human&)obj << " ";
+	return os << obj.get_speciality() << " " << obj.get_experience();
+}
+
 class Graduate :public Student
 {
 	std::string subject;
@@ -209,6 +226,12 @@ public:
 		cout << subject << endl;
 	}
 };
+
+std::ostream& operator<<(std::ostream&os, const Graduate& obj)
+{
+	os << (Student&)obj << " ";
+	return os << obj.get_subject();
+}
 
 //#define INHERITANCE
 #define POLYMORPHISM
@@ -247,7 +270,12 @@ Human human("Montana", "Antonio", 25);
 	cout << DELIMITR << endl;
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
-		group[i]->info();
+		//group[i]->info();
+		cout << typeid(*group[i]).name() << endl;
+		//cout << *group[i] << endl;
+		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
+		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
+		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
 		cout << DELIMITR << endl;
 	}
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
