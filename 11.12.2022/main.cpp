@@ -253,6 +253,18 @@ Human human("Montana", "Antonio", 25);
 		cout << *group[i];
 		cout << DELIMITR << endl;
 	}
+
+	std::ofstream fout("Group.txt");
+	fout << DELIMITR << endl;
+	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
+	{
+		//group[i]->info();
+		fout << *group[i];
+		fout << DELIMITR << endl;
+	}
+	fout.close();
+	system("notepad Group.txt");
+
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		delete group[i];
