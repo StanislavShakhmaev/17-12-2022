@@ -54,15 +54,15 @@ public:
 
 	// Methods:
 
-	virtual void info()const
+	virtual std::ostream& info(std::ostream& os)const
 	{
-		cout << last_name << " " << first_name << " " << age << " лет\n";
+		return os << last_name << " " << first_name << " " << age << " лет, ";
 	}
 };
 
-std::ostream& operator<<(std::ostream&os, const Human& obj)
+std::ostream& operator << (std::ostream& os, const Human& obj)
 {
-	return os << obj.get_last_name() << " " << obj.get_first_name() << " " << obj.get_age();
+	return obj.info(os);
 }
 
 #define STUDENT_TAKE_PARAMETERS const std::string& speciality, const std::string& group, double rating, double attendance
@@ -124,18 +124,11 @@ public:
 	
 	// Methods:
 
-	void info()const override
+	std::ostream& info(std::ostream& os)const
 	{
-		Human::info();
-		cout << speciality << " " << group << " " << rating << " " << attendance;
+		return Human::info(os) << speciality << " " << group << " " << rating << " " << attendance;
 	}
 };
-
-std::ostream& operator<<(std::ostream&os, const Student& obj)
-{
-	os << (Human&)obj << " ";
-	return os << obj.get_speciality() << " " << obj.get_group() << " " << obj.get_rating() << " " << obj.get_attendance();
-}
 
 #define TEACHER_TAKE_PARAMETERS const std::string& speciality, unsigned int experience
 #define TEACHER_GIVE_PARAMETERS speciality, experience
@@ -177,18 +170,11 @@ const std::string& get_speciality() const
 
 	// Methods:
 
-	void info()const override
+	std::ostream& info(std::ostream& os)const
 	{
-		Human::info();
-		cout << speciality << " " << experience << endl;
+		return Human::info(os) << speciality << " " << experience;
 	}
 };
-
-std::ostream& operator<<(std::ostream&os, const Teacher& obj)
-{
-	os << (Human&)obj << " ";
-	return os << obj.get_speciality() << " " << obj.get_experience();
-}
 
 class Graduate :public Student
 {
@@ -220,18 +206,11 @@ public:
 
 	// Methods:
 
-	void info()const override
+	std::ostream& info(std::ostream& os)const
 	{
-		Student::info();
-		cout << subject << endl;
+		return Student::info(os) << subject;
 	}
 };
-
-std::ostream& operator<<(std::ostream&os, const Graduate& obj)
-{
-	os << (Student&)obj << " ";
-	return os << obj.get_subject();
-}
 
 //#define INHERITANCE
 #define POLYMORPHISM
@@ -271,11 +250,7 @@ Human human("Montana", "Antonio", 25);
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
 	{
 		//group[i]->info();
-		cout << typeid(*group[i]).name() << endl;
-		//cout << *group[i] << endl;
-		if (typeid(*group[i]) == typeid(Student))cout << *dynamic_cast<Student*>(group[i]) << endl;
-		if (typeid(*group[i]) == typeid(Teacher))cout << *dynamic_cast<Teacher*>(group[i]) << endl;
-		if (typeid(*group[i]) == typeid(Graduate))cout << *dynamic_cast<Graduate*>(group[i]) << endl;
+		cout << *group[i];
 		cout << DELIMITR << endl;
 	}
 	for (int i = 0; i < sizeof(group) / sizeof(group[0]); i++)
