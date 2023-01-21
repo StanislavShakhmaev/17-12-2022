@@ -1,18 +1,5 @@
-
---------------------------------------------------------
-
-Pinkman Jessie 25 лет, Chemistry WW_220 80 90
---------------------------------------------------------
-
-White Walter 50 лет, Chemistry 25
---------------------------------------------------------
-
-Schrader Hank 40 лет, Criminalistic OBN 85 80How to catch Heisenberg
---------------------------------------------------------
-
-Vercetti Tomas 30 лет, Criminalistic Vice 85 98
---------------------------------------------------------
-
-Diaz Ricardo 50 лет, Weapons destribution 20
---------------------------------------------------------
-
+class Student:	Pinkman   Jessie    25   Chemistry                WW_220  80      90      
+class Teacher:	White     Walter    50   Chemistry                25   
+class Graduate:	Schrader  Hank      40   Criminalistic            OBN     85      80      How to catch Heisenberg
+class Student:	Vercetti  Tomas     30   Criminalistic            Vice    85      98      
+class Teacher:	Diaz      Ricardo   50   Weapons destribution     20   
